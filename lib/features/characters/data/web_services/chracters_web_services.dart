@@ -1,6 +1,8 @@
-import 'package:breakingbad/characters/data/models/response/characters_response_dto.dart';
+
 import 'package:breakingbad/core/constans/strings.dart';
 import 'package:dio/dio.dart';
+
+import '../models/response/characters_response_dto.dart';
 
 class CharactersWebServices {
   late Dio dio;

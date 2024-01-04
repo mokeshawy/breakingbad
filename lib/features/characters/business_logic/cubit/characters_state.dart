@@ -6,6 +6,6 @@ abstract class CharactersState {}
 class CharactersInitial extends CharactersState {}
 
 class CharactersLoaded extends CharactersState {
-  final ChractersResponseDto chractersResponseDto;
-  CharactersLoaded(this.chractersResponseDto);
+  final ChractersResponseDto charactersResponseDto;
+  CharactersLoaded(this.charactersResponseDto);
 }
