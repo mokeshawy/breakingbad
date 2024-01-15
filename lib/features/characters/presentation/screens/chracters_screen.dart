@@ -14,6 +14,7 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
+
   late CharactersResponseDto charactersResponseDto;
 
   @override
@@ -21,6 +22,17 @@ class _CharactersScreenState extends State<CharactersScreen> {
     super.initState();
     charactersResponseDto =
         BlocProvider.of<CharactersCubit>(context).getAllCharacters();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: MyColors.yellow,
+        title: Text('Characters', style: TextStyle(color: MyColors.grey)),
+      ),
+      body: builderBlocWidget(),
+    );
   }
 
   Widget builderBlocWidget() {
@@ -33,14 +45,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
         return showLoadingIndicator();
       }
     });
-  }
-
-  Widget showLoadingIndicator() {
-    return Center(
-      child: CircularProgressIndicator(
-        color: MyColors.yellow,
-      ),
-    );
   }
 
   Widget buildLoadedListWidgets() {
@@ -56,6 +60,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
+
   Widget buildCharactersList() {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,22 +69,21 @@ class _CharactersScreenState extends State<CharactersScreen> {
           crossAxisSpacing: 1,
           mainAxisSpacing: 1,
         ),
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemCount: charactersResponseDto.results?.length,
         itemBuilder: (context, index) {
-          return CharactersItem();
+          charactersResponseDto.results?.forEach((element) {
+
+          });
+          //TODO NOT DONE
+          return CharactersItem(result:charactersResponseDto.results);
         });
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.yellow,
-        title: Text(
-          'Characters',
-          style: TextStyle(color: MyColors.grey),
-        ),
-      ),
-      body: builderBlocWidget(),
-    );
-  }
 }
+
+  Widget showLoadingIndicator() {
+    return const Center(
+        child: CircularProgressIndicator(color: MyColors.yellow));
+  }
