@@ -1,6 +1,6 @@
-
 import 'package:breakingbad/core/constans/strings.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/response/characters_response_dto.dart';
 
@@ -14,16 +14,15 @@ class CharactersWebServices {
       connectTimeout: const Duration(seconds: 20 * 1000),
       receiveTimeout: const Duration(seconds: 20 * 1000),
     );
-
     dio = Dio(options);
   }
 
-  Future<ChractersResponseDto> getAllCharacters() async {
+  Future<CharactersResponseDto> getAllCharacters() async {
     try {
       Response response = await dio.get('character');
-      return response.data;
+      return CharactersResponseDto.fromJson(response.data);
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) print(e.toString());
       rethrow;
     }
   }

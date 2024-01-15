@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/characters/business_logic/cubit/characters_cubit.dart';
 import 'features/characters/data/repository/characters_repository.dart';
-import 'features/characters/data/web_services/chracters_web_services.dart';
+import 'features/characters/data/web_services/characters_web_services.dart';
 import 'features/characters/presentation/screens/chracters_details_screen.dart';
 import 'features/characters/presentation/screens/chracters_screen.dart';
 

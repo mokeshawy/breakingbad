@@ -8,11 +8,11 @@ part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepository charactersRepository;
-  late ChractersResponseDto response;
+  late CharactersResponseDto response;
 
   CharactersCubit(this.charactersRepository) : super(CharactersInitial());
 
-  ChractersResponseDto getAllCharacters() {
+  CharactersResponseDto getAllCharacters() {
     charactersRepository.getAllCharacters().then((charactersResponseDto) {
       emit(CharactersLoaded(charactersResponseDto));
       response = charactersResponseDto;
