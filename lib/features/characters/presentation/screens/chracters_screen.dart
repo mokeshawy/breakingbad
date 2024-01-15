@@ -14,7 +14,6 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-
   late CharactersResponseDto charactersResponseDto;
 
   @override
@@ -60,7 +59,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
-
   Widget buildCharactersList() {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -74,16 +72,22 @@ class _CharactersScreenState extends State<CharactersScreen> {
         padding: EdgeInsets.zero,
         itemCount: charactersResponseDto.results?.length,
         itemBuilder: (context, index) {
-          charactersResponseDto.results?.forEach((element) {
-
-          });
+          charactersResponseDto.results?.forEach((element) {});
           //TODO NOT DONE
-          return CharactersItem(result:charactersResponseDto.results);
+          return CharactersItem(
+              result: getResult(charactersResponseDto.results));
         });
   }
 }
 
-  Widget showLoadingIndicator() {
-    return const Center(
-        child: CircularProgressIndicator(color: MyColors.yellow));
-  }
+Widget showLoadingIndicator() {
+  return const Center(child: CircularProgressIndicator(color: MyColors.yellow));
+}
+
+Results getResult(List<Results>? result) {
+  Results? _result;
+  result?.forEach((element) {
+    _result = element;
+  });
+  return _result!;
+}
