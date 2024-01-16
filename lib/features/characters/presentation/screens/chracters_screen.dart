@@ -72,22 +72,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
         padding: EdgeInsets.zero,
         itemCount: charactersResponseDto.results?.length,
         itemBuilder: (context, index) {
-          charactersResponseDto.results?.forEach((element) {});
           //TODO NOT DONE
           return CharactersItem(
-              result: getResult(charactersResponseDto.results));
+              result: charactersResponseDto.results![index]);
         });
   }
 }
 
 Widget showLoadingIndicator() {
   return const Center(child: CircularProgressIndicator(color: MyColors.yellow));
-}
-
-Results getResult(List<Results>? result) {
-  Results? _result;
-  result?.forEach((element) {
-    _result = element;
-  });
-  return _result!;
 }
