@@ -1,13 +1,13 @@
 class CharactersResponseDto {
   late Info? info;
-  late List<Results>? results;
+  List<Results> results = [];
 
   CharactersResponseDto.fromJson(Map<String, dynamic> json) {
     info = json['info'] != null ? Info.fromJson(json['info']) : null;
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
+        results.add(Results.fromJson(v));
       });
     }
   }
@@ -17,9 +17,7 @@ class CharactersResponseDto {
     if (info != null) {
       data['info'] = info!.toJson();
     }
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
-    }
+    data['results'] = results.map((v) => v.toJson()).toList();
     return data;
   }
 }

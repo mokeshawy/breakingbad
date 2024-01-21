@@ -14,13 +14,13 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-  late CharactersResponseDto charactersResponseDto;
+  late List<Results> results;
 
   @override
   void initState() {
     super.initState();
-    charactersResponseDto =
-        BlocProvider.of<CharactersCubit>(context).getAllCharacters();
+    results =
+        BlocProvider.of<CharactersCubit>(context).getAllCharacters() as List<Results>;
   }
 
   @override
@@ -38,7 +38,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return BlocBuilder<CharactersCubit, CharactersState>(
         builder: (context, state) {
       if (state is CharactersLoaded) {
-        charactersResponseDto = (state).charactersResponseDto;
+        results = (state).results;
         return buildLoadedListWidgets();
       } else {
         return showLoadingIndicator();
@@ -70,11 +70,11 @@ class _CharactersScreenState extends State<CharactersScreen> {
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: charactersResponseDto.results?.length,
+        itemCount: results.length,
         itemBuilder: (context, index) {
           //TODO NOT DONE
           return CharactersItem(
-              result: charactersResponseDto.results![index]);
+              result: results[index]);
         });
   }
 }
