@@ -25,15 +25,13 @@ class CharactersItem extends StatelessWidget {
         ),
         child: Container(
           color: MyColors.grey,
-          child: result.image!.isNotEmpty
-              ? fadeInImageResource(result.image ?? "")
-              : Image.asset('assets/images/placeholder.png'),
+          child: imageResource(result.image),
         ),
       ),
     );
   }
 
-  Text titleText(String name) {
+  Widget titleText(String name) {
     return Text(
       name,
       style: const TextStyle(
@@ -47,12 +45,16 @@ class CharactersItem extends StatelessWidget {
     );
   }
 
-  FadeInImage fadeInImageResource(String image) {
+  Widget imageResource(String? image) {
+    String resource = image ?? "";
+    if (resource.isEmpty) {
+      return Image.asset('assets/images/placeholder.png');
+    }
     return FadeInImage.assetNetwork(
       width: double.infinity,
       height: double.infinity,
       placeholder: 'assets/images/loading.gif',
-      image: image,
+      image: resource,
       fit: BoxFit.cover,
     );
   }
