@@ -19,8 +19,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   @override
   void initState() {
     super.initState();
-    results =
-        BlocProvider.of<CharactersCubit>(context).getAllCharacters() as List<Results>;
+    BlocProvider.of<CharactersCubit>(context).getAllCharacters();
   }
 
   @override
@@ -28,7 +27,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.yellow,
-        title: Text('Characters', style: TextStyle(color: MyColors.grey)),
+        title: const Text('Characters', style: TextStyle(color: MyColors.grey)),
       ),
       body: builderBlocWidget(),
     );
@@ -38,7 +37,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return BlocBuilder<CharactersCubit, CharactersState>(
         builder: (context, state) {
       if (state is CharactersLoaded) {
-        results = (state).results;
+        results = (state).charactersResponseDto.results;
         return buildLoadedListWidgets();
       } else {
         return showLoadingIndicator();
@@ -61,7 +60,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget buildCharactersList() {
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 2 / 3,
           crossAxisSpacing: 1,
@@ -72,9 +71,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
         padding: EdgeInsets.zero,
         itemCount: results.length,
         itemBuilder: (context, index) {
-          //TODO NOT DONE
-          return CharactersItem(
-              result: results[index]);
+          return CharactersItem(result: results[index]);
         });
   }
 }

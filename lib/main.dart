@@ -1,14 +1,16 @@
 import 'package:breakingbad/app_router.dart';
+import 'package:breakingbad/initialize_main_services_locator.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  await initializeMainServicesLocator();
   runApp(BreakingBad(appRouter: AppRouter()));
 }
 
 class BreakingBad extends StatelessWidget {
   final AppRouter appRouter;
 
-  const BreakingBad({super.key, required this.appRouter});
+  const BreakingBad({super.key,  required this.appRouter});
 
   // This widget is the root of your application.
   @override

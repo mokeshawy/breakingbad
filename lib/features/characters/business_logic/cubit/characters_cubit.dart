@@ -1,22 +1,19 @@
 import 'package:bloc/bloc.dart';
+import 'package:breakingbad/features/characters/domain/use_case/characters_usecase.dart';
 import 'package:meta/meta.dart';
 
 import '../../data/models/response/characters_response_dto.dart';
-import '../../data/repository/characters_repository.dart';
 
 part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
-  final CharactersRepository charactersRepository;
-   List<Results> results = [];
+  final CharactersUseCase charactersUseCase;
 
-  CharactersCubit(this.charactersRepository) : super(CharactersInitial());
+  CharactersCubit(this.charactersUseCase) : super(CharactersInitial());
 
-  List<Results> getAllCharacters() {
-    charactersRepository.getAllCharacters().then((charactersResponseDto) {
-      emit(CharactersLoaded(charactersResponseDto.results));
-      results = charactersResponseDto.results;
+  void getAllCharacters() {
+    charactersUseCase().then((charactersResponseDto) {
+      emit(CharactersLoaded(charactersResponseDto));
     });
-    return results;
   }
 }

@@ -6,7 +6,7 @@ abstract class CharactersState {}
 class CharactersInitial extends CharactersState {}
 
 class CharactersLoaded extends CharactersState {
-  final List<Results> results;
+  final CharactersResponseDto charactersResponseDto;
 
-  CharactersLoaded(this.results);
+  CharactersLoaded(this.charactersResponseDto);
 }
