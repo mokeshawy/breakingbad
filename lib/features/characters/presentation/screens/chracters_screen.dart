@@ -1,10 +1,11 @@
 import 'package:breakingbad/core/constans/colors.dart';
 import 'package:breakingbad/features/characters/business_logic/cubit/characters_cubit.dart';
-import 'package:breakingbad/features/characters/presentation/widgets/characters_item.dart';
+import 'package:breakingbad/features/characters/presentation/widgets/characters_item_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/response/characters_response_dto.dart';
+import '../widgets/icon_button_widget.dart';
 
 class CharactersScreen extends StatefulWidget {
   const CharactersScreen({super.key});
@@ -15,6 +16,10 @@ class CharactersScreen extends StatefulWidget {
 
 class _CharactersScreenState extends State<CharactersScreen> {
   late List<Results> results;
+
+  late List<Results> searchedResults;
+  bool isSearching = false;
+  final searchTextController = TextEditingController();
 
   @override
   void initState() {
@@ -27,10 +32,75 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.yellow,
-        title: const Text('Characters', style: TextStyle(color: MyColors.grey)),
+        title: isSearching ? buildSearchFiled() : buildAppBarTitle(),
+        actions: buildAppBarActions(),
       ),
       body: builderBlocWidget(),
     );
+  }
+
+  Widget buildAppBarTitle() {
+    return const Text('Characters', style: TextStyle(color: MyColors.grey));
+  }
+
+  Widget buildSearchFiled() {
+    return TextField(
+      controller: searchTextController,
+      cursorColor: MyColors.grey,
+      decoration: const InputDecoration(
+          hintText: 'Find a character...',
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: MyColors.grey, fontSize: 16)),
+      style: const TextStyle(color: MyColors.grey, fontSize: 16),
+      onChanged: (searchedCharacter) {
+        addSearchedForItemsToSearchedList(searchedCharacter);
+      },
+    );
+  }
+
+  void addSearchedForItemsToSearchedList(String searchedCharacter) {
+    searchedResults = results
+        .where((character) =>
+            character.name!.toLowerCase().startsWith(searchedCharacter))
+        .toList();
+    setState(() {});
+  }
+
+  List<Widget> buildAppBarActions() {
+    if (isSearching) {
+      return [
+        iconButton(Icons.clear, MyColors.grey, onPressed: () {
+          clearSearch();
+          Navigator.pop(context);
+        })
+      ];
+    }
+    return [
+      iconButton(Icons.search, MyColors.grey, onPressed: () {
+        startSearch();
+      })
+    ];
+  }
+
+  void startSearch() {
+    ModalRoute.of(context)
+        ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: stopSearching));
+    setState(() {
+      isSearching = true;
+    });
+  }
+
+  void stopSearching() {
+    clearSearch();
+    setState(() {
+      isSearching = false;
+    });
+  }
+
+  void clearSearch() {
+    setState(() {
+      searchTextController.clear();
+    });
   }
 
   Widget builderBlocWidget() {
@@ -69,13 +139,28 @@ class _CharactersScreenState extends State<CharactersScreen> {
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: results.length,
+        itemCount: handleCharacterItemCount(),
         itemBuilder: (context, index) {
-          return CharactersItem(result: results[index]);
+          return CharactersItem(result: setCharactersItems(index));
         });
   }
-}
 
-Widget showLoadingIndicator() {
-  return const Center(child: CircularProgressIndicator(color: MyColors.yellow));
+  int handleCharacterItemCount() {
+    if (searchTextController.text.isEmpty) {
+      return results.length;
+    }
+    return searchedResults.length;
+  }
+
+  Results setCharactersItems(int index) {
+    if (searchTextController.text.isEmpty) {
+      return results[index];
+    }
+    return searchedResults[index];
+  }
+
+  Widget showLoadingIndicator() {
+    return const Center(
+        child: CircularProgressIndicator(color: MyColors.yellow));
+  }
 }
