@@ -1,0 +1,1 @@
+enum FlavorType { stage, live }
