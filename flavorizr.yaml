@@ -1,0 +1,26 @@
+flavors:
+  stage:
+    app:
+      name: "Breakingbad Stage"
+
+    android:
+      applicationId: "com.breaking.bad.stage"
+      firebase:
+        config: "firebase/stage/google-services.json"
+
+    ios:
+      bundleId: "com.breaking.bad.stage"
+      firebase:
+        config: "firebase/stage/GoogleService-Info.plist"
+  live:
+    app:
+      name: "Breakingbad"
+
+    android:
+      applicationId: "com.breaking.bad"
+      firebase:
+        config: "firebase/live/google-services.json"
+    ios:
+      bundleId: "com.breaking.bad"
+      firebase:
+        config: "firebase/live/GoogleService-Info.plist"

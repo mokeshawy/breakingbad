@@ -36,6 +36,12 @@ dependencies:
   flutter_offline: ^3.0.1
   json_annotation: ^4.0.1
   get_it: ^7.6.4
+  firebase_crashlytics: ^3.3.7
+  firebase_analytics: ^10.5.1
+  firebase_core: ^2.14.0
+  firebase_remote_config: ^4.2.7
+  firebase_in_app_messaging: ^0.7.4+3
+  firebase_messaging: ^14.7.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0

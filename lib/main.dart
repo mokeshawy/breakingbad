@@ -1,9 +1,12 @@
 import 'package:breakingbad/app_router.dart';
 import 'package:breakingbad/initialize_main_services_locator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   await initializeMainServicesLocator();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(BreakingBad(appRouter: AppRouter()));
 }
 

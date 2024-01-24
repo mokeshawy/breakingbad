@@ -1,4 +1,4 @@
-package com.example.breakingbad
+package com.breaking.bad
 
 import io.flutter.embedding.android.FlutterActivity
 
