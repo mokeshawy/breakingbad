@@ -12,7 +12,7 @@ class Flavor {
       case FlavorType.live:
         return 'https://rickandmortyapi.com/api/';
       default:
-        return '';
+        return 'https://rickandmortyapi.com/api/';
     }
   }
 }
