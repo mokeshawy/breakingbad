@@ -107,7 +107,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return BlocBuilder<CharactersCubit, CharactersState>(
         builder: (context, state) {
       if (state is CharactersLoaded) {
-        results = (state).charactersResponseDto.results;
+        results = (state).charactersResponseDto.results ?? [];
         return buildLoadedListWidgets();
       } else {
         return showLoadingIndicator();
@@ -159,8 +159,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return searchedResults[index];
   }
 
-  Widget showLoadingIndicator() {
-    return const Center(
-        child: CircularProgressIndicator(color: MyColors.yellow));
-  }
+  Widget showLoadingIndicator() =>
+      const Center(child: CircularProgressIndicator(color: MyColors.yellow));
 }
